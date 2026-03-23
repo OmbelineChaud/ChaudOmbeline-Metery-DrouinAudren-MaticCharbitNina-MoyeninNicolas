@@ -30,7 +30,7 @@ CREATE TABLE Machine(a
 CREATE TABLE Grade(
    nomGrade VARCHAR2(50),
    PRIMARY KEY(nomGrade),
-   CONSTRAINT ch_Grade_nomGrade CHECK (nomGrade IN ('Affilié', 'Sympathisant', 'Adhérent', 'Chevalier/Dame', 'Grand Chevalier/Haute Dame', 'Commandeur', 'Grand Croix')
+   CONSTRAINT ch_Grade_nomGrade CHECK (nomGrade IN ('Affilie', 'Sympathisant', 'Adherent', 'Chevalier/Dame', 'Grand Chevalier/Haute Dame', 'Commandeur', 'Grand Croix')
 
 );
 
