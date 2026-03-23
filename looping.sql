@@ -20,7 +20,7 @@ CREATE TABLE Sauce(
    PRIMARY KEY(nomSauce)
 );
 
-CREATE TABLE Machine(a
+CREATE TABLE Machine(
    idMachine NUMBER(10),
    nom VARCHAR2(50) NOT NULL,
    modele VARCHAR2(100) NOT NULL,
