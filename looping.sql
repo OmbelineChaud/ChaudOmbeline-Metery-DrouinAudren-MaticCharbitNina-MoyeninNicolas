@@ -1,5 +1,3 @@
-#MLD
-
 CREATE TABLE Organisme(
    SIRET NUMBER(14,0),
    raison_sociale VARCHAR2(50) NOT NULL,
@@ -31,22 +29,28 @@ CREATE TABLE Machine(a
 
 CREATE TABLE Grade(
    nomGrade VARCHAR2(50),
-   PRIMARY KEY(nomGrade)
+   PRIMARY KEY(nomGrade),
+   CONSTRAINT ch_Grade_nomGrade CHECK (nomGrade IN ('Affilié', 'Sympathisant', 'Adhérent', 'Chevalier/Dame', 'Grand Chevalier/Haute Dame', 'Commandeur', 'Grand Croix')
+
 );
 
 CREATE TABLE Rang(
    nomRang VARCHAR2(25),
-   PRIMARY KEY(nomRang)
+   PRIMARY KEY(nomRang),
+   CONSTRAINT ch_Rang_nomRang CHECK (nomRang IN ('Compagnon', 'Novice'))
 );
 
 CREATE TABLE Titre(
    nomTitre VARCHAR2(50),
-   PRIMARY KEY(nomTitre)
+   PRIMARY KEY(nomTitre),
+   CONSTRAINT ch_Titre_nomTitre CHECK (nomTitre IN ('Philanthrope', 'Protecteur', 'Honorable')
 );
 
 CREATE TABLE Dignite(
    nomDignite VARCHAR2(50),
-   PRIMARY KEY(nomDignite)
+   PRIMARY KEY(nomDignite),
+   CONSTRAINT ch_Dignite_nomDignite CHECK (nomDignite IN ('Maitre', 'Grand Chancelier', 'Grand Maitre')
+
 );
 
 CREATE TABLE Legume(
