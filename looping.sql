@@ -287,6 +287,8 @@ INSERT INTO Grade(idGrade,nomGrade)VALUES (1,'Affilie');
 INSERT INTO Rang(idRang,nomRang) VALUES (1,'Novice');
 INSERT INTO Titre(idTitre,nomTitre) VALUES (1,'Philanthrope');
 INSERT INTO Dignite(idDignite,nomDignite) VALUES (1,NULL);--'Maitre'
+INSERT INTO Organisme(SIRET,raison_sociale) VALUES (1,'JESAISPAS');
+INSERT INTO Groupe(idGroupe,idRegistre) VALUES (1,1);
 INSERT INTO Tenrac(SIRET,idGroupe,RFID,nom,prenom,courriel,tel,adresse_postale,dateDeNaissance,idDignite,idGrade,idTitre,idRang)
 VALUES (1,1,1,'Bob','Boben','Bob@gmail.com',123456789,2500,
 TO_DATE('01-01-2001','DD-MM-YYYY'),NULL,1,1,1);
