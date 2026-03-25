@@ -30,7 +30,8 @@ CREATE TABLE Machine(
 CREATE TABLE Grade(
    idGrade NUMBER(1,0),
    nomGrade VARCHAR2(50) NOT NULL,
-   PRIMARY KEY(idGrade)
+   PRIMARY KEY(idGrade),
+   CONSTRAINT ch_Grade_nomGrade CHECK (nomGrade IN ('Affilie', 'Sympathisant', 'Adherent', 'Chevalier/Dame', 'Grand Chevalier/Haute Dame', 'Commandeur', 'Grand Croix')
 );
 
 CREATE TABLE Rang(
@@ -42,13 +43,15 @@ CREATE TABLE Rang(
 CREATE TABLE Titre(
    idTitre NUMBER(1,0),
    nomTitre VARCHAR2(50) NOT NULL,
-   PRIMARY KEY(idTitre)
+   PRIMARY KEY(idTitre),
+   CONSTRAINT ch_Titre_nomTitre CHECK (nomTitre IN ('Philanthrope', 'Protecteur', 'Honorable')
 );
 
 CREATE TABLE Dignite(
    idDignite NUMBER(1,0),
    nomDignite VARCHAR2(50) NOT NULL,
-   PRIMARY KEY(idDignite)
+   PRIMARY KEY(idDignite),
+   CONSTRAINT ch_Dignite_nomDignite CHECK (nomDignite IN ('Maitre', 'Grand Chancelier', 'Grand Maitre')
 );
 
 CREATE TABLE Legume(
