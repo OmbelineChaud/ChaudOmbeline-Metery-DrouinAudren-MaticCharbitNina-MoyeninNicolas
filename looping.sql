@@ -37,7 +37,8 @@ CREATE TABLE Grade(
 CREATE TABLE Rang(
    idRang NUMBER(1,0),
    nomRang VARCHAR2(25) NOT NULL,
-   PRIMARY KEY(idRang)
+   PRIMARY KEY(idRang),
+   CONSTRAINT ch_Rang_nomRang CHECK (nomRang IN ('Novice', 'Compagnon')
 );
 
 CREATE TABLE Titre(
