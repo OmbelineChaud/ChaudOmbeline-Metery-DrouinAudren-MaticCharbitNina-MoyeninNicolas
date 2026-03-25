@@ -28,29 +28,27 @@ CREATE TABLE Machine(
 );
 
 CREATE TABLE Grade(
-   nomGrade VARCHAR2(50),
-   PRIMARY KEY(nomGrade),
-   CONSTRAINT ch_Grade_nomGrade CHECK (nomGrade IN ('Affilie', 'Sympathisant', 'Adherent', 'Chevalier/Dame', 'Grand Chevalier/Haute Dame', 'Commandeur', 'Grand Croix')
-
+   idGrade NUMBER(1,0),
+   nomGrade VARCHAR2(50) NOT NULL,
+   PRIMARY KEY(idGrade)
 );
 
 CREATE TABLE Rang(
-   nomRang VARCHAR2(25),
-   PRIMARY KEY(nomRang),
-   CONSTRAINT ch_Rang_nomRang CHECK (nomRang IN ('Compagnon', 'Novice'))
+   idRang NUMBER(1,0),
+   nomRang VARCHAR2(25) NOT NULL,
+   PRIMARY KEY(idRang)
 );
 
 CREATE TABLE Titre(
-   nomTitre VARCHAR2(50),
-   PRIMARY KEY(nomTitre),
-   CONSTRAINT ch_Titre_nomTitre CHECK (nomTitre IN ('Philanthrope', 'Protecteur', 'Honorable')
+   idTitre NUMBER(1,0),
+   nomTitre VARCHAR2(50) NOT NULL,
+   PRIMARY KEY(idTitre)
 );
 
 CREATE TABLE Dignite(
-   nomDignite VARCHAR2(50),
-   PRIMARY KEY(nomDignite),
-   CONSTRAINT ch_Dignite_nomDignite CHECK (nomDignite IN ('Maitre', 'Grand Chancelier', 'Grand Maitre')
-
+   idDignite NUMBER(1,0),
+   nomDignite VARCHAR2(50) NOT NULL,
+   PRIMARY KEY(idDignite)
 );
 
 CREATE TABLE Legume(
@@ -124,37 +122,34 @@ CREATE TABLE Tenrac(
    courriel VARCHAR2(50) NOT NULL,
    tel NUMBER(10,0) NOT NULL,
    adresse_postale NUMBER(5,0) NOT NULL,
-   nomDignite VARCHAR2(50),
-   nomGrade VARCHAR2(50) NOT NULL,
-   nomTitre VARCHAR2(50),
-   nomRang VARCHAR2(25),
+   dateDeNaissance DATE NOT NULL,
+   idDignite NUMBER(1,0),
+   idGrade NUMBER(1,0) NOT NULL,
+   idTitre NUMBER(1,0),
+   idRang NUMBER(1,0),
    PRIMARY KEY(SIRET, idGroupe, RFID),
    UNIQUE(courriel),
    UNIQUE(tel),
    FOREIGN KEY(SIRET) REFERENCES Organisme(SIRET),
    FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe),
-   FOREIGN KEY(nomDignite) REFERENCES Dignite(nomDignite),
-   FOREIGN KEY(nomGrade) REFERENCES Grade(nomGrade),
-   FOREIGN KEY(nomTitre) REFERENCES Titre(nomTitre),
-   FOREIGN KEY(nomRang) REFERENCES Rang(nomRang)
+   FOREIGN KEY(idDignite) REFERENCES Dignite(idDignite),
+   FOREIGN KEY(idGrade) REFERENCES Grade(idGrade),
+   FOREIGN KEY(idTitre) REFERENCES Titre(idTitre),
+   FOREIGN KEY(idRang) REFERENCES Rang(idRang)
 );
 
 CREATE TABLE Reunion(
-   dateReunion TIMESTAMP WITH TIME ZONE,
    adresse VARCHAR2(50),
-   SIRET NUMBER(14,0) NOT NULL,
-   idGroupe NUMBER(10) NOT NULL,
-   RFID NUMBER(10) NOT NULL,
+   dateReunion DATE,
    idRepas NUMBER(10) NOT NULL,
-   PRIMARY KEY(dateReunion),
+   PRIMARY KEY(adresse, dateReunion),
    FOREIGN KEY(adresse) REFERENCES Restaurant(adresse),
-   FOREIGN KEY(SIRET, idGroupe, RFID) REFERENCES Tenrac(SIRET, idGroupe, RFID),
    FOREIGN KEY(idRepas) REFERENCES Repas(idRepas)
 );
 
 CREATE TABLE Entretien(
    idEntretien NUMBER(10),
-   dateE TIMESTAMP NOT NULL,
+   dateE DATE NOT NULL,
    periodicite NUMBER(2,0) NOT NULL,
    type VARCHAR2(100) NOT NULL,
    idRegistre NUMBER(10),
@@ -170,20 +165,20 @@ CREATE TABLE Entretien(
 
 CREATE TABLE TenracOrdre(
    idGroupe NUMBER(10),
+   nomOrdre VARCHAR2(25) NOT NULL,
    PRIMARY KEY(idGroupe),
    FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
 );
 
 CREATE TABLE Avis(
-   idNotation NUMBER(10),
+   adresse VARCHAR2(50),
+   SIRET NUMBER(14,0),
+   idGroupe NUMBER(10),
+   RFID NUMBER(10),
    note NUMBER(5,0) NOT NULL,
    commentaire VARCHAR2(100),
-   dateNotation TIMESTAMP NOT NULL,
-   adresse VARCHAR2(50),
-   SIRET NUMBER(14,0) NOT NULL,
-   idGroupe NUMBER(10) NOT NULL,
-   RFID NUMBER(10) NOT NULL,
-   PRIMARY KEY(idNotation),
+   dateNotation DATE NOT NULL,
+   PRIMARY KEY(adresse, SIRET, idGroupe, RFID),
    FOREIGN KEY(adresse) REFERENCES Restaurant(adresse),
    FOREIGN KEY(SIRET, idGroupe, RFID) REFERENCES Tenrac(SIRET, idGroupe, RFID)
 );
@@ -195,6 +190,17 @@ CREATE TABLE TenracClub(
    PRIMARY KEY(idGroupe_1),
    FOREIGN KEY(idGroupe_1) REFERENCES Groupe(idGroupe),
    FOREIGN KEY(idGroupe) REFERENCES TenracOrdre(idGroupe)
+);
+
+CREATE TABLE participe(
+   SIRET NUMBER(14,0),
+   idGroupe NUMBER(10),
+   RFID NUMBER(10),
+   adresse VARCHAR2(50),
+   dateReunion DATE,
+   PRIMARY KEY(SIRET, idGroupe, RFID, adresse, dateReunion),
+   FOREIGN KEY(SIRET, idGroupe, RFID) REFERENCES Tenrac(SIRET, idGroupe, RFID),
+   FOREIGN KEY(adresse, dateReunion) REFERENCES Reunion(adresse, dateReunion)
 );
 
 CREATE TABLE plat_constitue_de(
